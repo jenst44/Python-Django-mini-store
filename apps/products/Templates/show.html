@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{{ product.product_name }}</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-1"></div>
+			<div class="col-xs-6">
+				<h1>{{ product.product_name }}</h1>
+				<form action="http://localhost:8000/products/update/{{ product.id }}" method="post">
+				{% csrf_token %}
+					<p>Brand:</p>
+					<select name="brand">
+						<option value="Black Diamond" {% if product.brand == 'Black Diamond'%} {{'selected'}} {%endif%}>Black Diamond</option>
+						<option value="Prana"{% if product.brand == 'Prana'%} {{'selected'}} {%endif%}>Prana</option>
+						<option value="La Sportiva"{% if product.brand == 'La Sportiva'%} {{'selected'}} {%endif%}>La Sportiva</option>
+						<option value="Petzl"{% if product.brand == 'Petzl'%} {{'selected'}} {%endif%}>Petzl</option>
+					</select>
+					<p>Product Name</p>
+					<input type="text" name="product_name" value="{{product.product_name}}">
+					<p>Price ($):</p>
+					<input type="text" name="price" value="{{product.price}}">
+					<p>Description</p>
+					<input type="text" name="description" value="{{product.description}}">
+					<p></p>
+					<input class="btn btn-primary" type="submit" value="Update"> <a class="btn btn-danger" href="http://localhost:8000/products/destroy/{{ product.id }}">Delete</a>
+				</form>
+				<a href="http://localhost:8000/products/">Return Home</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>List of Products</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<style>
+	
+	.errors{
+		color:red;
+	}
+
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-1"></div>
+			<div class="col-xs-7">
+				<h2>Jens' Store</h2>
+				<h2>Product Listing:</h2>
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Manufacturer</th>
+							<th>Product Name</th>
+							<th>Price ($)</th>
+							<th>Date Added</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for product in products %}
+							<tr>
+								<td>{{product.brand}}</td>
+								<td><a href="http://localhost:8000/products/show/{{ product.id }}">{{product.product_name}}</a></td>
+								<td>{{product.price}}</td>
+								<td>{{product.created_at}}</td>
+								<td class="text-center"><a class="btn btn-danger" href="http://localhost:8000/products/destroy/{{ product.id }}">Delete</a></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<h2>Add a Product</h2>
+				<form action="http://localhost:8000/products/create" method="post">
+					{% csrf_token %}
+					<p>Manfucaturer/Brand</p>
+					<select name="brand" id="">
+						<option value="Black Diamond">Black Diamond</option>
+						<option value="Prana">Prana</option>
+						<option value="La Sportiva">La Sportiva</option>
+						<option value="Petzl">Petzl</option>
+					</select>
+					<p>Product Name:</p>
+					<input type="text" name="product_name">
+					<p>Price ($):</p>
+					<input type="text" name="price">
+					<p>Description</p>
+					<input type="text" name="description">
+					<p></p>
+					{% for error in errors %}
+						<p class="errors">{{error}}</p>
+					{% endfor %}
+					<input class="btn btn-primary" type="submit">
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
